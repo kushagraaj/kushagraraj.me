@@ -1,40 +1,30 @@
+// src/components/BlogContent.jsx
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
-import fm from 'front-matter'; 
+import fm from 'front-matter';
 
 const BlogContent = ({ setView }) => {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
-    const postFiles = ['test.md'];
-
     const fetchPosts = async () => {
-      try {
-        const postsData = await Promise.all(
-          postFiles.map(async (file) => {
-            const response = await fetch(`/posts/${file}`);
-            if (!response.ok) {
-              console.error(`Failed to fetch post: ${file}`);
-              return null;
-            }
-            const text = await response.text();
-            const { attributes, body } = fm(text); 
-            return {
-              slug: file.replace('.md', ''),
-              frontmatter: attributes, 
-              content: body,         
-            };
-          })
-        );
-        
-        const validPosts = postsData.filter(post => post !== null);
-        validPosts.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
-        setPosts(validPosts);
+      const modules = import.meta.glob('/public/posts/*.md', { as: 'raw' });
 
-      } catch (error) {
-        console.error("An error occurred while fetching posts:", error);
-      }
+      const postsData = await Promise.all(
+        Object.entries(modules).map(async ([path, resolver]) => {
+          const rawContent = await resolver();
+          const { attributes, body } = fm(rawContent);
+          return {
+            slug: path.split('/').pop().replace('.md', ''),
+            frontmatter: attributes,
+            content: body,
+          };
+        })
+      );
+      
+      postsData.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+      setPosts(postsData);
     };
 
     fetchPosts();
@@ -50,7 +40,7 @@ const BlogContent = ({ setView }) => {
         <button onClick={() => setSelectedPost(null)} className="text-blue-600 hover:underline mb-8">
           &larr; Back to All Posts
         </button>
-        <div className="prose">
+        <div className="prose max-w-none">
           <h1>{selectedPost.frontmatter.title}</h1>
           <p className="text-gray-500 text-sm">
             {new Date(selectedPost.frontmatter.date).toLocaleDateString()}
