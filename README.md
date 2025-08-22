@@ -1,2 +1,2 @@
-# kushagraraj.me
-The source code for my personal corner on the web built with React, Vite, and Tailwind CSS
+# Portfolio website & blog
+will update this later ty
