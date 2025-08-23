@@ -29,6 +29,9 @@ const Footer = () => {
         <PillLink href={`mailto:${personalInfo.email}`}>
           {personalInfo.email} <ExternalLinkIcon />
         </PillLink>
+        <PillLink href={personalInfo.spotify}>
+          Spotify <ExternalLinkIcon />
+        </PillLink>
         <PillLink href={personalInfo.github}>
           GitHub <ExternalLinkIcon />
         </PillLink>
