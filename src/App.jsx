@@ -3,6 +3,7 @@ import { personalInfo } from './data/personalInfo.jsx';
 import MainContent from "./components/MainComponent.jsx";
 import BlogContent from './components/BlogContent.jsx';
 import Footer from './components/Footer.jsx';
+import Warning from './components/warning.jsx'
 
 export default function App() {
   const [view, setView] = useState('home');
@@ -73,7 +74,7 @@ export default function App() {
         ) : (
           <BlogContent setView={setView} />
         )}
-
+        <Warning />
         <Footer />
       </div>
     </div>
