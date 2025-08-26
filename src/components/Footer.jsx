@@ -41,12 +41,13 @@ const Footer = () => {
         <PillLink href={`mailto:${personalInfo.email}`}>
           {personalInfo.email} <ExternalLinkIcon />
         </PillLink>
-        <PillLink href={personalInfo.github}>
-          GitHub <ExternalLinkIcon />
-        </PillLink>
-        <PillLink href={personalInfo.linkedin}>
-          LinkedIn <ExternalLinkIcon />
-        </PillLink>
+
+        {personalInfo.socialLinks.map((link) => (
+            <PillLink key={link.name} href={link.url}>
+                {link.name} <ExternalLinkIcon />
+            </PillLink>
+        ))}
+        
       </div>
       
       <div className="flex justify-between items-center mt-8 text-sm text-gray-500">
