@@ -4,24 +4,34 @@ import { ExternalLinkIcon } from './Icons.jsx';
 import PillLink from './PillLink.jsx';
 
 const Footer = () => {
-  const [lastVisitorLocation, setLastVisitorLocation] = useState('...');
+  const [visitorLocation, setVisitorLocation] = useState('...');
 
   useEffect(() => {
-    const fetchLastVisitorLocation = async () => {
+    const fetchLocation = async () => {
       try {
-        const response = await fetch('/api/visitor'); 
-        if (!response.ok) throw new Error('Failed to fetch visitor data');
+        let response;
+        if (import.meta.env.DEV) {
+          console.log("Running in dev mode, using public API.");
+          response = await fetch('https://ipapi.co/json/');
+        } else {
+          console.log("Running in production, using /api/visitor.");
+          response = await fetch('/api/visitor');
+        }
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch location data');
+        }
         
         const data = await response.json();
-        const location = data.location || 'an unknown location';
-        setLastVisitorLocation(location);
+        const location = data.location || `${data.city}, ${data.country_code}`;
+        setVisitorLocation(location || 'an unknown location');
 
       } catch (error) {
-        console.error("Could not fetch last visitor location:", error);
-        setLastVisitorLocation('a galaxy far, far away');
+        console.error("Could not fetch visitor location:", error);
+        setVisitorLocation('a galaxy far, far away');
       }
     };
-    fetchLastVisitorLocation();
+    fetchLocation();
   }, []);
 
   return (
@@ -30,9 +40,6 @@ const Footer = () => {
       <div className="flex flex-wrap gap-4 items-center">
         <PillLink href={`mailto:${personalInfo.email}`}>
           {personalInfo.email} <ExternalLinkIcon />
-        </PillLink>
-        <PillLink href={personalInfo.spotify}>
-          Spotify <ExternalLinkIcon />
         </PillLink>
         <PillLink href={personalInfo.github}>
           GitHub <ExternalLinkIcon />
@@ -47,7 +54,7 @@ const Footer = () => {
             <span>
                 Made with <a href="https://vitejs.dev/" target="_blank" rel="noopener noreferrer" className="font-medium text-gray-700 hover:text-blue-600">Vite</a>
             </span>
-            <span>Last visit from {lastVisitorLocation}</span>
+            <span>Last visit from {visitorLocation}</span>
         </div>
         <span>&copy; {new Date().getFullYear()} {personalInfo.name}</span>
       </div>
