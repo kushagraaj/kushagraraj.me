@@ -1,25 +1,27 @@
-// src/components/Footer.jsx
 import React, { useState, useEffect } from 'react';
 import { personalInfo } from '../data/personalInfo.jsx';
 import { ExternalLinkIcon } from './Icons.jsx';
 import PillLink from './PillLink.jsx';
 
 const Footer = () => {
-  const [visitorLocation, setVisitorLocation] = useState('...');
+  const [lastVisitorLocation, setLastVisitorLocation] = useState('...');
 
   useEffect(() => {
-    const fetchLocation = async () => {
+    const fetchLastVisitorLocation = async () => {
       try {
-        const response = await fetch('https://ipapi.co/json/');
-        if (!response.ok) throw new Error('Failed to fetch location');
+        const response = await fetch('/api/visitor'); 
+        if (!response.ok) throw new Error('Failed to fetch visitor data');
+        
         const data = await response.json();
-        setVisitorLocation(`${data.city}, ${data.country_code}`);
+        const location = data.location || 'an unknown location';
+        setLastVisitorLocation(location);
+
       } catch (error) {
-        console.error("Could not fetch visitor location:", error);
-        setVisitorLocation('your location');
+        console.error("Could not fetch last visitor location:", error);
+        setLastVisitorLocation('a galaxy far, far away');
       }
     };
-    fetchLocation();
+    fetchLastVisitorLocation();
   }, []);
 
   return (
@@ -45,7 +47,7 @@ const Footer = () => {
             <span>
                 Made with <a href="https://vitejs.dev/" target="_blank" rel="noopener noreferrer" className="font-medium text-gray-700 hover:text-blue-600">Vite</a>
             </span>
-            <span>Last visit from {visitorLocation}</span>
+            <span>Last visit from {lastVisitorLocation}</span>
         </div>
         <span>&copy; {new Date().getFullYear()} {personalInfo.name}</span>
       </div>
