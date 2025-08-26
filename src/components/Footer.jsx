@@ -15,7 +15,7 @@ const Footer = () => {
           response = await fetch('https://ipapi.co/json/');
         } else {
           console.log("Running in production, using /api/visitor.");
-          response = await fetch('/api/visitor');
+          response = await fetch('/api/visitor.jsx');
         }
 
         if (!response.ok) {
@@ -47,7 +47,7 @@ const Footer = () => {
                 {link.name} <ExternalLinkIcon />
             </PillLink>
         ))}
-        
+
       </div>
       
       <div className="flex justify-between items-center mt-8 text-sm text-gray-500">
