@@ -2,10 +2,18 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" }
   ],
-  "redirects": [
+  "redirects": [ 
     {
       "source": "/github",
       "destination": "https://github.com/kushagraaj"
+    },
+    {
+      "source:": "/sptfy",
+      "destination": "https://open.spotify.com/user/swfc7nj2mx7i1h6n0kf81itge?si=10bce91677e8425c"
+    },
+    {
+      "source": "/spotify",
+      "destination": "https://open.spotify.com/user/swfc7nj2mx7i1h6n0kf81itge?si=10bce91677e8425c"
     }
   ]
 }
