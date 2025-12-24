@@ -7,10 +7,10 @@ export const personalInfo = {
   email: "hi@kushagraraj.me",
   socialLinks: [
     { name: 'GitHub', url: 'https://github.com/kushagraaj' },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/kushagraaj/' },
-    { name: 'Spotify', url: 'https://open.spotify.com/user/swfc7nj2mx7i1h6n0kf81itge' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/kushagraaj/' }
+   /** { name: 'Spotify', url: 'https://open.spotify.com/user/swfc7nj2mx7i1h6n0kf81itge' },
     { name: 'Steam', url: 'https://steamcommunity.com/id/brucemacgary' },
     { name: 'Reddit', url: 'https://www.reddit.com/user/brucemacgary' },
-    { name: 'Instagram', url: 'https://www.instagram.com/kzrrx/' }
+    { name: 'Instagram', url: 'https://www.instagram.com/kzrrx/' } **/
   ]
 };
