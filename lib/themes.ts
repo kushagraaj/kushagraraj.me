@@ -43,11 +43,13 @@ export function applyDayTheme(step: number) {
   for (const [k, v] of Object.entries(t.vars)) root.style.setProperty(k, v)
 }
 
-// inlined in <head> so the theme is set before first paint
+// inlined in <head> so the theme is set before first paint.
+// order: ?theme=<name> in the url, then a recent manual pick, then the local hour
 export const themeBootScript = `try{
-var T=${JSON.stringify(DAY_THEMES.map((t) => [t.dark, t.vars]))},H=${JSON.stringify(THEME_HOURS)},s=-1;
+var T=${JSON.stringify(DAY_THEMES.map((t) => [t.dark, t.vars]))},H=${JSON.stringify(THEME_HOURS)},N=${JSON.stringify(DAY_THEMES.map((t) => t.name))},s=-1;
+var q=N.indexOf(new URLSearchParams(location.search).get('theme'));
 var p=(localStorage.getItem('${STORAGE_KEY}')||'').split('|');
-if(p.length===2&&Date.now()-Number(p[1])<${PICK_LASTS_MS})s=parseInt(p[0],10);
+if(q>=0)s=q;else if(p.length===2&&Date.now()-Number(p[1])<${PICK_LASTS_MS})s=parseInt(p[0],10);
 if(!(s>=0&&s<T.length)){var h=new Date().getHours();s=T.length-1;for(var i=H.length-1;i>=0;i--)if(h>=H[i]){s=i;break}}
 var r=document.documentElement;r.dataset.theme=T[s][0]?'dark':'light';r.dataset.themeStep=s;
 for(var k in T[s][1])r.style.setProperty(k,T[s][1][k]);
