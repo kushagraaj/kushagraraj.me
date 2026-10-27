@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), Arial, Helvetica, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+:root {
+  --bg: #efefed;
+  --text: #161616;
+  --muted: #6b6b6b;
+  --line: rgba(0, 0, 0, 0.18);
+  --chip: #d2d2cf;
+  --chip-text: #161616;
+  --accent: #1d2bd6;
+  --on-accent: #ffffff;
+  --on-accent-muted: rgba(255, 255, 255, 0.72);
+  --panel: #fbfbfa;
+  --panel-border: rgba(0, 0, 0, 0.1);
+  /* github grid follows the theme accent */
+  --gh-0: color-mix(in srgb, var(--text) 8%, transparent);
+  --gh-1: color-mix(in srgb, var(--accent) 28%, var(--bg));
+  --gh-2: color-mix(in srgb, var(--accent) 52%, var(--bg));
+  --gh-3: color-mix(in srgb, var(--accent) 76%, var(--bg));
+  --gh-4: var(--accent);
+  color-scheme: light;
+}
+
+/* dark fallback when the inline theme script hasn't run */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111111;
+    --text: #e8e8e6;
+    --muted: #8a8a88;
+    --line: rgba(255, 255, 255, 0.16);
+    --chip: #2a2a2a;
+    --chip-text: #e8e8e6;
+    --accent: #4856ff;
+    --panel: #1a1a1a;
+    --panel-border: rgba(255, 255, 255, 0.1);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #111111;
+  --text: #e8e8e6;
+  --muted: #8a8a88;
+  --line: rgba(255, 255, 255, 0.16);
+  --chip: #2a2a2a;
+  --chip-text: #e8e8e6;
+  --accent: #4856ff;
+  --panel: #1a1a1a;
+  --panel-border: rgba(255, 255, 255, 0.1);
+  color-scheme: dark;
+}
+
+html,
+body {
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  letter-spacing: -0.2px;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* lowercase everywhere except code */
+body {
+  text-transform: lowercase;
+}
+pre,
+code {
+  text-transform: none;
+}
+button,
+input {
+  text-transform: inherit;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* inline link chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0.1rem;
+  padding: 0.12rem 0.4rem;
+  line-height: 1.15;
+  vertical-align: baseline;
+  background: var(--chip);
+  color: var(--chip-text);
+  transition: background-color 120ms ease, color 120ms ease;
+  white-space: nowrap;
+}
+.chip:hover,
+.chip:focus-visible,
+.chip[data-active="true"] {
+  background: var(--accent);
+  color: var(--on-accent);
+  outline: none;
+}
+
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  color: var(--muted);
+  transition: color 150ms ease, background-color 150ms ease, transform 150ms ease;
+}
+.social-icon:hover,
+.social-icon:focus-visible,
+.social-icon[data-active="true"] {
+  color: var(--text);
+  background: var(--chip);
+  outline: none;
+}
+.social-icon:active {
+  transform: scale(0.94);
+}
+
+/* list row */
+.row {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.row::before {
+  content: "";
+  position: absolute;
+  inset: -1px -0.6rem 0;
+  z-index: -1;
+  background: var(--accent);
+  opacity: 0;
+  transform: scaleY(0.6);
+  transition: opacity 120ms ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.row:hover::before,
+.row:focus-visible::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+.row:hover,
+.row:focus-visible {
+  color: var(--on-accent);
+  outline: none;
+}
+.row:hover .row-muted,
+.row:focus-visible .row-muted {
+  color: var(--on-accent-muted);
+}
+.row-muted {
+  color: var(--muted);
+}
+
+/* now playing */
+.eq-bar {
+  width: 2px;
+  height: 3px;
+  background: currentColor;
+  animation: eq 0.9s infinite ease;
+}
+@keyframes eq {
+  0%, 100% { height: 3px; }
+  50% { height: 11px; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.disc-spin { animation: spin 6s linear infinite; }
+.disc:hover .disc-spin { animation-play-state: running !important; }
+
+.sound-wave { animation: sound-wave 0.7s ease-in-out infinite; }
+.sound-wave-2 { animation-delay: 0.15s; }
+@keyframes sound-wave {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+/* map */
+.map-dark { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .map-dark { display: block; }
+  :root:not([data-theme="light"]) .map-light { display: none; }
+}
+:root[data-theme="dark"] .map-dark { display: block; }
+:root[data-theme="dark"] .map-light { display: none; }
+
+.map-pulse { opacity: 0.35; animation: map-pulse 2.2s ease-out infinite; }
+@keyframes map-pulse {
+  0% { transform: scale(0.4); opacity: 0.5; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* blog */
+.prose {
+  line-height: 1.75;
+}
+.prose p { margin: 0 0 1.2em; }
+.prose h2, .prose h3 { font-weight: 500; margin: 2em 0 0.6em; letter-spacing: -0.02em; }
+.prose h2 { font-size: 1.2rem; }
+.prose h3 { font-size: 1.05rem; }
+.prose a { text-decoration: underline; text-underline-offset: 3px; }
+.prose a:hover { background: var(--accent); color: var(--on-accent); text-decoration: none; }
+.prose strong { font-weight: 600; }
+.prose ul, .prose ol { margin: 0 0 1.2em; padding-left: 1.3em; }
+.prose ul { list-style: square; }
+.prose ol { list-style: decimal; }
+.prose li { margin: 0.3em 0; }
+.prose img { width: 100%; height: auto; margin: 0 0 1.2em; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--chip);
+  padding: 0.1em 0.3em;
+}
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0 0 1.2em;
+}
+.prose pre code { background: none; padding: 0; }
+.prose blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+  color: var(--muted);
+  margin: 0 0 1.2em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* the disc spin is kept on purpose */
+  .eq-bar, .map-pulse, .sound-wave { animation: none !important; }
+  .row::before { transition: none; }
+}
