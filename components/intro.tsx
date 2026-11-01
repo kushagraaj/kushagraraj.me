@@ -2,7 +2,8 @@
 
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { site } from '@/lib/site'
-import { ArrowIcon, GitHubIcon, LinkedInIcon, MailIcon } from './icons'
+import { GitHubIcon, LinkedInIcon, MailIcon } from './icons'
+import { KyteMark } from './kyte-mark'
 import { Pronounce } from './pronounce'
 import { EmailPanel, GitHubPanel, LinkedInPanel } from './social-panels'
 import { ThemeRuler } from './theme-ruler'
@@ -22,10 +23,7 @@ type Box = { left: number; top: number; width: number; height: number }
 function IntroText({ text }: { text: string }) {
   return text.split(/(\{work\})/).map((part, i) =>
     part === '{work}' ? (
-      <a key={i} href={site.work.url} target="_blank" rel="noopener noreferrer" className="chip">
-        {site.work.name}
-        <ArrowIcon />
-      </a>
+      <KyteMark key={i} href={site.work.url} />
     ) : (
       <Fragment key={i}>{part}</Fragment>
     ),

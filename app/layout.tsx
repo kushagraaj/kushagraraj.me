@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from 'next'
-import { IBM_Plex_Mono, Inter } from 'next/font/google'
+import { IBM_Plex_Mono, Instrument_Serif, Inter } from 'next/font/google'
 import { Footer } from '@/components/footer'
 import { site } from '@/lib/site'
 import { themeBootScript } from '@/lib/themes'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
+const serif = Instrument_Serif({ subsets: ['latin'], weight: '400', style: 'italic', variable: '--font-serif', display: 'swap' })
 const plexMono = IBM_Plex_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${plexMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${plexMono.variable} ${serif.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
       </head>
