@@ -2,6 +2,7 @@
 
 export type Project = {
   name: string
+  role?: string
   description: string
   url: string
   year: string
@@ -42,7 +43,27 @@ export const site = {
     },
   },
 
+  experience: [
+    {
+      name: 'tangent kyte',
+      role: 'ai engineer',
+      description:
+        'Building production AI systems for a studio delivering premium AI services, from rapid prototypes to deployed products. Work spans model integration, agentic workflows and polished, high-performance interfaces.',
+      url: 'https://tangent-kyte.github.io/www/',
+      year: 'now',
+      tags: ['llms', 'agents', 'next.js', 'three.js'],
+    },
+  ] as Project[],
+
   projects: [
+    {
+      name: 'curio',
+      description:
+        'An open-source React component library for personal sites: music players, maps, theme sliders and project layouts. Distributed through a shadcn-compatible registry for one-command installs, with an llms.txt index so AI agents can discover and add components.',
+      url: 'https://github.com/kushagraaj/curio',
+      year: '2026',
+      tags: ['react', 'next.js', 'tailwind css', 'shadcn registry'],
+    },
     {
       name: 'Portfolio v2',
       description:

@@ -1,8 +1,8 @@
-import { site } from '@/lib/site'
+import type { Project } from '@/lib/site'
 import { ArrowIcon } from './icons'
 
-export function ProjectsTimeline() {
-  const years = [...new Set(site.projects.map((p) => p.year))]
+export function Timeline({ items }: { items: readonly Project[] }) {
+  const years = [...new Set(items.map((p) => p.year))]
 
   return (
     <div className="flex flex-col pt-5">
@@ -12,7 +12,7 @@ export function ProjectsTimeline() {
             {year}
           </div>
           <div className="relative border-l pb-6 pl-5" style={{ borderColor: 'var(--line)' }}>
-            {site.projects
+            {items
               .filter((p) => p.year === year)
               .map((p) => (
                 <a
@@ -29,6 +29,11 @@ export function ProjectsTimeline() {
                   <span className="flex items-center gap-1.5 text-[15px] group-hover:text-[var(--accent)]">
                     {p.name} <ArrowIcon />
                   </span>
+                  {p.role && (
+                    <span className="mt-0.5 block font-mono text-[11px]" style={{ color: 'var(--accent)' }}>
+                      {p.role}
+                    </span>
+                  )}
                   <span className="mt-0.5 block text-[14px] leading-snug" style={{ color: 'var(--muted)' }}>
                     {p.description}
                   </span>

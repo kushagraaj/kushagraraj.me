@@ -2,9 +2,10 @@ import { Intro } from '@/components/intro'
 import { LocationMap } from '@/components/location-map'
 import { NowPlaying } from '@/components/now-playing'
 import { PostList } from '@/components/post-list'
-import { ProjectsTimeline } from '@/components/projects-timeline'
+import { Timeline } from '@/components/projects-timeline'
 import { Section } from '@/components/section'
 import { getAllPosts } from '@/lib/blog'
+import { site } from '@/lib/site'
 
 export default async function Home() {
   const posts = await getAllPosts()
@@ -23,7 +24,7 @@ export default async function Home() {
       </div>
 
       <Section title="Projects">
-        <ProjectsTimeline />
+        <Timeline items={site.projects} />
       </Section>
 
       {posts.length > 0 && (
