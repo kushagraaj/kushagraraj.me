@@ -1,11 +1,10 @@
 'use client'
 
-import { useClock, useLastVisitor } from '@/lib/live-data'
+import { useLastVisitor } from '@/lib/live-data'
 import { site } from '@/lib/site'
 
 export function Footer() {
   const visitor = useLastVisitor()
-  const time = useClock(site.location.timeZone)
 
   return (
     <footer className="relative z-10 mx-auto mt-24 w-full max-w-[680px] px-5 pb-10">
@@ -23,7 +22,16 @@ export function Footer() {
           <span />
         )}
         <span>
-          {site.location.label} · <span style={{ color: 'var(--text)' }}>{time ?? '--:--:--'}</span> {site.location.tz}
+          components used from{' '}
+          <a
+            href="https://curio-components.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-[var(--line)] underline-offset-4 transition-colors hover:text-[var(--accent)]"
+            style={{ color: 'var(--text)' }}
+          >
+            curio
+          </a>
         </span>
       </div>
       <div className="mt-1.5 font-mono text-[11px]" style={{ color: 'var(--muted)' }}>
