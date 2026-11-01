@@ -31,7 +31,7 @@ export const site = {
     lon: 73.8567,
   },
 
-  work: { name: 'tangent kyte', url: 'https://tangent-kyte.github.io/www/' },
+  work: { name: 'tangent kyte', url: 'https://tangentkyte.tech' },
 
   email: 'hi@kushagraraj.me',
   socials: {
@@ -49,7 +49,7 @@ export const site = {
       role: 'ai engineer',
       description:
         'Building production AI systems for a studio delivering premium AI services, from rapid prototypes to deployed products. Work spans model integration, agentic workflows and polished, high-performance interfaces.',
-      url: 'https://tangent-kyte.github.io/www/',
+      url: 'https://tangentkyte.tech',
       year: 'now',
       tags: ['llms', 'agents', 'next.js', 'three.js'],
     },
